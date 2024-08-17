@@ -9,7 +9,7 @@ import FavoritePage from "./pages/FavoritePage";
 const App = () => {
   return (
     <div className="flex">
-      {/* <Sidebar /> */}
+      <Sidebar />
 
       <Routes>
         <Route path="/" element={<HomePage />} />
