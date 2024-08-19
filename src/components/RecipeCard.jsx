@@ -50,7 +50,15 @@ const RecipeCard = ({ recipe, bg, badge }) => {
             addRecipeToFavorites();
           }}
         >
-          <Heart size={20} className="hover:fill-red-500 hover:text-red-500" />
+          {!isFavorite && (
+            <Heart
+              size={20}
+              className="hover:fill-red-500 hover:text-red-500"
+            />
+          )}
+          {isFavorite && (
+            <Heart size={20} className="fill-red-500 text-red-500" />
+          )}
         </div>
       </a>
       <div className="flex mt-1">
