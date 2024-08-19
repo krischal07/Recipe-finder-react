@@ -35,10 +35,15 @@ const RecipeCard = ({ recipe, bg, badge }) => {
         target="_blank"
         // rel="noopener noreferrer"
       >
+        <div className="skeleton absolute inset-0" />
         <img
           src={recipe.image}
           alt="recipe images"
-          className="rounded-md w-full h-full object-cover cursor-pointer"
+          className="rounded-md w-full h-full object-cover cursor-pointer opacity-0 duration-500"
+          onLoad={(e) => {
+            e.currentTarget.style.opacity = 1;
+            e.currentTarget.previousElementSibling.style.display = "none";
+          }}
         />
         <div className="absolute bottom-2 left-2 bg-white rounded-full p-1 cursor-pointer flex items-center gap-1 text-sm">
           <Soup size={24} /> {recipe.yield} Servings
