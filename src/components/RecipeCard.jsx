@@ -1,11 +1,28 @@
 import { Heart, HeartPulse, Soup } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 
 const RecipeCard = ({ recipe, bg, badge }) => {
   const getTwoValueFromArray = (arr) => {
     return [arr[0], arr[1]];
   };
 
+  const [isFavorite, setisFavorite] = useState(
+    localStorage.getItem("favorites")?.includes(recipe.label)
+  );
+  const addRecipeToFavorites = () => {
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const isRecipeAlreadyInFavorites = favorites.some(
+      (fav) => fav.label === recipe.label
+    );
+    if (isRecipeAlreadyInFavorites) {
+      favorites = favorites.filter((fav) => fav.label === recipe.label);
+      setisFavorite(false);
+    } else {
+      favorites.push(recipe);
+      setisFavorite(true);
+    }
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  };
   const healthLabels = getTwoValueFromArray(recipe.healthLabels);
 
   return (
@@ -26,7 +43,13 @@ const RecipeCard = ({ recipe, bg, badge }) => {
         <div className="absolute bottom-2 left-2 bg-white rounded-full p-1 cursor-pointer flex items-center gap-1 text-sm">
           <Soup size={24} /> {recipe.yield} Servings
         </div>
-        <div className="absolute top-1 right-2 bg-white rounded-full p-1 cursor-pointer">
+        <div
+          className="absolute top-1 right-2 bg-white rounded-full p-1 cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            addRecipeToFavorites();
+          }}
+        >
           <Heart size={20} className="hover:fill-red-500 hover:text-red-500" />
         </div>
       </a>
